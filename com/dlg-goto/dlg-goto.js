@@ -1,27 +1,26 @@
 /* exported $dlgGoto */
 var $dlgGoto = (function() {
-  var DOM = ''
-        + '<div class="notepad-dlg-goto">'
-          + '<div class="dialogbox">'
-            + '<div class="titlebar">'
+  var $dlg = $(''
+        + '<div class="notepad-dlg-mask notepad-dlg-goto">'
+          + '<div class="dialogbox notepad-dlgbox">'
+            + '<div class="notepad-dlg-titlebar">'
               + '<p class="title">转到指定行</p>'
               + '<span class="close-btn">✖</span>'
             + '</div>'
-            + '<div class="main">'
+            + '<div class="main notepad-dlg-main">'
               + '<label for="">行号(L):</label><br>'
               + '<input class="txt-line-num" type="text" autofocus><br>'
-              + '<input class="btn-goto" type="button" value="转到">'
-              + '<input class="btn-cancel" type="button" value="取消">'
+              + '<input class="btn-goto btn" type="button" value="转到">'
+              + '<input class="btn-cancel btn" type="button" value="取消">'
             + '</div>'
           + '</div>'
-        + '</div>';
-
-  var $dlg = $(DOM);
+        + '</div>');
 
   var $btnClose = $dlg.find('.close-btn'),
       $btnCancel = $dlg.find('.btn-cancel'),
       $btnGoto = $dlg.find('.btn-goto'),
-      $txtLineNum = $dlg.find('.txt-line-num');
+      $txtLineNum = $dlg.find('.txt-line-num'),
+      $titleBar = $dlg.find('.notepad-dlg-titlebar');
 
   var cfg = {
     lineNum: 1,
@@ -34,7 +33,7 @@ var $dlgGoto = (function() {
   function gotoHandler() {
     if(!validateLineNum()) return;
 
-    cfg.gotoHandler(); 
+    cfg.gotoHandler($txtLineNum.val()); 
     destoryDlg();
   }
 
@@ -65,7 +64,7 @@ var $dlgGoto = (function() {
     $.extend(cfg, conf);
 
     $('body').append($dlg);
-    $dlg.find('.dialogbox').draggable({handle: $dlg.find('.titlebar')});
+    $dlg.find('.dialogbox').draggable({handle: $titleBar});
 
     $btnClose.click(destoryDlg);
     $btnCancel.click(destoryDlg);
